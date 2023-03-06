@@ -29,3 +29,11 @@ Route::get('/alumnos/create', [AlumnosController::class,'create'])
 //Store - Almacenar un nuevo registro
 Route::post('/alumnos', [AlumnosController::class,'store'])
     ->name('alumnos.store');
+
+//Edit - Formulario de edicion
+// localhost:8000/5/edit
+Route::get('/alumnos/{id}/edit', [AlumnosController::class,'edit'])
+    ->name('alumnos.edit');
+
+Route::put('/alumnos/{id}', [AlumnosController::class,'update'])
+    ->name('alumnos.update');
