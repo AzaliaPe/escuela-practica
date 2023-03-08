@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alumno;
+use App\Models\Carrera;
 
 class AlumnosController extends Controller
 {
@@ -18,6 +19,8 @@ class AlumnosController extends Controller
 
     public function create(){
         $argumentos = array();
+        $carreras = Carrera::all();
+        $argumentos['carreras'] = $carreras;
         return view('alumnos.create', $argumentos);
     }
 
@@ -48,6 +51,21 @@ class AlumnosController extends Controller
 
         $alumno ->save(); 
         return redirect()->route('alumnos.edit', $id)->with('exito', 'El alumno se ha actualizado exitosamente');
+    }
+
+    public function delete($id){
+        $alumno = Alumno::find($id);
+        $argumentos = array();
+        $argumentos['alumno'] = $alumno;
+        return view('alumnos.delete', $argumentos);
+    }
+
+    public function destroy(Request $request, $id){
+        $alumno = Alumno::find($id);
+        $feedback = "Se elimino correctamente a: " . $alumno->nombre;
+        $alumno->delete();
+        return redirect()->route('alumnos.index')
+        ->with('exito', $feedback );
     }
 
 
